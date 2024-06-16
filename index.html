@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>The Missing Cell</title>
+  <title>Игра "Запомни число"</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>The Missing Cell</h1>
+    <h1>Игра "Запомни число"</h1>
     <div class="game-board" id="game-board"></div>
     <div class="timer" id="timer">5.00</div>
-    <input type="text" id="input-field" placeholder="Your answer">
-    <button id="check-button">ОК</button>
+    <div id="input-wrapper" style="display:none;">
+      <input type="text" id="input-field" placeholder="Введите пропавшее число">
+      <button id="check-button">ОК</button>
+    </div>
     <div id="result"></div>
-    <button id="play-button">PLAY</button>
+    <button id="play-button">Играть</button>
   </div>
   <script src="script.js"></script>
 </body>
