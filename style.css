@@ -1,0 +1,62 @@
+body {
+  background-color: black;
+  color: white;
+  font-family: 'Consolas', monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 2px;
+  padding: 20px;
+  background-color: #333;
+  border-radius: 10px;
+}
+
+.game-board div {
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border: 1px solid #555; /* Добавил границы для ячеек */
+  min-height: 50px; /* Установил минимальную высоту для ячеек */
+}
+
+.game-board .correct {
+  background-color: green;
+  color: white;
+}
+
+.game-board .incorrect {
+  background-color: red;
+  color: white;
+}
+
+.timer {
+  font-size: 36px;
+  margin-top: 20px;
+}
+
+input, button {
+  font-size: 18px;
+  padding: 10px 20px;
+  font-family: 'Consolas', monospace;
+  margin-top: 10px;
+}
+
+#result {
+  font-size: 24px;
+  margin-top: 20px;
+}
