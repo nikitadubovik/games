@@ -54,14 +54,14 @@ checkButton.addEventListener('click', () => {
   if (!gameStarted) {
     const userInput = inputField.value.trim();
     if (userInput === missingNumber) {
-      resultElement.textContent = 'Вы угадали!';
+      resultElement.textContent = 'Correct';
       const cells = Array.from(gameBoard.children);
       const missingCell = cells.find(cell => !cell.textContent);
       missingCell.textContent = missingNumber;
 
             missingCell.classList.add('correct');
           } else {
-            resultElement.textContent = 'Неправильно.';
+            resultElement.textContent = 'Wrong';
             const cells = Array.from(gameBoard.children);
             const missingCell = cells.find(cell => !cell.textContent);
             missingCell.textContent = missingNumber;
