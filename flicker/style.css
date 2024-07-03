@@ -73,3 +73,35 @@ input {
   font-size: 16px;
   font-weight: bold;
 }
+
+@media (max-width: 767px) {
+  .game-board {
+    width: 300px;
+    height: 300px;
+  }
+
+  .game-board .cell {
+    width: 37.5px;
+    height: 37.5px;
+  }
+
+  .game-board .cell .flashed-square {
+    width: 27px;
+    height: 27px;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  button,
+  input {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .result-message {
+    font-size: 14px;
+  }
+}
