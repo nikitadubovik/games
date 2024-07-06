@@ -22,11 +22,11 @@ function createGameBoard() {
 }
 
 function flashCells() {
-  const flashDuration = 1000;
+  const flashDuration = 1100;
   const minFlashDelay = 2000;
   const maxFlashDelay = 4000; 
-  const minFlashedCells = 10;
-  const maxFlashedCells = 15;
+  const minFlashedCells = 9;
+  const maxFlashedCells = 13;
 
   isGameInProgress = true;
   console.log('Game started');
