@@ -10,6 +10,12 @@ body {
   margin: 0;
 }
 
+.game-description {
+  font-weight: normal;
+  font-size: 16px;
+  text-align: center;
+}
+
 .game-container {
   display: flex;
   flex-direction: column;
