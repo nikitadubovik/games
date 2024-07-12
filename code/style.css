@@ -1,0 +1,108 @@
+body {
+  font-family: 'Consolas', monospace;
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.code-container {
+  background-color: #fff;
+  color: #333;
+  padding: 20px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.code-display {
+  font-size: 32px;
+  font-weight: bold;
+  padding: 10px;
+  height: 48px; /* Ensure enough space for code to appear */
+  font-family: 'Consolas', monospace;
+}
+
+.input-container {
+  margin-top: 20px;
+}
+
+#code-input {
+  font-size: 24px;
+  padding: 5px 10px;
+  width: 100%;
+  max-width: 200px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 0 auto;
+  display: block;
+}
+
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 5px;
+  margin-top: 10px;
+}
+
+.key {
+  font-size: 24px;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Consolas', monospace;
+}
+
+#play {
+  grid-column: 1 / 2;
+}
+
+#ok {
+  grid-column: 3 / 4;
+}
+
+#result {
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  height: 32px; /* Fix height to avoid shifting the panel */
+  font-family: 'Consolas', monospace;
+}
+
+.timer-bar {
+  height: 5px;
+  background-color: #00ff00;
+  width: 100%;
+  margin-top: 10px;
+  transition: width 0.5s linear;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 50px;
+  }
+
+  .key {
+    padding: 8px;
+    font-size: 20px;
+    font-family: 'Consolas', monospace;
+  }
+}
