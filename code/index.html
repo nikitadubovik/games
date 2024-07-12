@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Code</h1>
+        <div class="code-container">
+            <div class="code-display">
+                <span id="code"></span>
+            </div>
+            <div class="input-container">
+                <input type="text" id="code-input" maxlength="8" pattern="\d*" />
+                <div class="keyboard">
+                    <button class="key">1</button>
+                    <button class="key">2</button>
+                    <button class="key">3</button>
+                    <button class="key">4</button>
+                    <button class="key">5</button>
+                    <button class="key">6</button>
+                    <button class="key">7</button>
+                    <button class="key">8</button>
+                    <button class="key">9</button>
+                    <button class="key" id="play">Play</button>
+                    <button class="key">0</button>
+                    <button class="key" id="ok">OK</button>
+                </div>
+            </div>
+            <div class="timer-bar" id="timer-bar"></div>
+        </div>
+        <div id="result"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
