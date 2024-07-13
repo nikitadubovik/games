@@ -19,13 +19,16 @@ li {
 
 a {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 10px 20px; /* Keep padding for spacing inside the button */
+  width: 150px; /* Set a fixed width for consistency */
+  text-align: center; /* Center the text horizontally */
   background-color: #4CAF50;
   color: white;
   text-decoration: none;
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
+
 
 a:hover {
   background-color: #45a049;
