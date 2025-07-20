@@ -56,14 +56,22 @@ h1 {
 
 .arrow {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100px;
-  height: 6px;
+  width: 100px;       /* длина стрелки */
+  height: 6px;        /* толщина стрелки */
   background-color: red;
   border-radius: 3px;
-  transform-origin: left center;
-  transform: translate(-50%, -50%) rotate(0deg);
+  top: 50%;           /* центр по вертикали */
+  left: 50%;          /* центр по горизонтали */
+  transform-origin: left center; /* поворот от левого края */
+  /* уберём translate, чтобы начало стрелки совпадало с центром круга */
+}
+
+#left-arrow {
+  transform: rotate(45deg); /* стартовый наклон в 45° */
+}
+
+#right-arrow {
+  transform: rotate(-45deg); /* стартовый наклон -45° */
 }
 
 .mark {
@@ -72,7 +80,7 @@ h1 {
   height: 20px;
   background-color: yellow;
   border-radius: 50%;
-  top: 5%;
+  top: 7%;              /* чуть ниже верхнего края */
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
