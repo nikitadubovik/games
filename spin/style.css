@@ -40,6 +40,9 @@ h1 {
   height: 250px;
   border-radius: 50%;
   border: 3px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .arrow {
@@ -47,10 +50,9 @@ h1 {
   width: 100px;
   height: 8px;
   background-color: red;
-  top: 50%;
-  left: 50%;
-  transform-origin: center center; /* Изменено для вращения вокруг центра */
-  margin-left: -50px; /* Центрируем стрелку */
+  transform-origin: left center; /* Вращение вокруг левого конца */
+  left: 50%; /* Центрируем точку вращения */
+  margin-left: -125px; /* Смещаем в центр круга */
 }
 
 .mark {
@@ -113,18 +115,12 @@ button {
 }
 
 @media (max-width: 767px) {
-  .circles-container {
-    flex-direction: column;
-    width: auto;
-    gap: 30px;
-  }
-
   .circle {
     width: 200px;
     height: 200px;
   }
-
+  
   .arrow {
-    width: 80px;
+    margin-left: -100px; /* Корректировка для мобильных */
   }
 }
