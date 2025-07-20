@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Spin</h1>
+  <div class="game-description">Count how many times each arrow crosses its mark during rotation</div>
+  <div class="game-container">
+    <div class="circles-container">
+      <div class="circle" id="left-circle">
+        <div class="arrow" id="left-arrow"></div>
+        <div class="mark left-mark"></div>
+      </div>
+      <div class="circle" id="right-circle">
+        <div class="arrow" id="right-arrow"></div>
+        <div class="mark right-mark"></div>
+      </div>
+    </div>
+    <div class="controls">
+      <button id="play-btn">Play</button>
+      <div class="input-fields">
+        <div>
+          <div>Left crosses:</div>
+          <input type="number" id="left-input" min="0">
+        </div>
+        <div>
+          <div>Right crosses:</div>
+          <input type="number" id="right-input" min="0">
+        </div>
+      </div>
+      <button id="submit-btn" disabled>Enter</button>
+      <div id="result-message"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
