@@ -42,8 +42,8 @@ document.addEventListener('DOMContentLoaded', function() {
     leftCrossesCount = 0;
     rightCrossesCount = 0;
 
-    leftArrow.style.transform = `translate(-50%, -50%) rotate(0deg)`;
-    rightArrow.style.transform = `translate(-50%, -50%) rotate(0deg)`;
+    leftArrow.style.transform = `rotate(45deg)`;
+    rightArrow.style.transform = `rotate(-45deg)`;
   }
 
   function startGame() {
@@ -92,8 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
       rightAngle = -easedProgress * 360 * rightRotations; // Вращение против часовой (угол уменьшается)
 
       // Обновляем стрелки
-      leftArrow.style.transform = `translate(-50%, -50%) rotate(${leftAngle}deg)`;
-      rightArrow.style.transform = `translate(-50%, -50%) rotate(${rightAngle}deg)`;
+      leftArrow.style.transform = `rotate(${45 + leftAngle}deg)`;
+      rightArrow.style.transform = `rotate(${-45 - rightAngle}deg)`;
 
       // Проверяем пересечения с меткой (метка в 0 градусах)
       leftCrossesCount += countCrosses(leftPrevAngle, leftAngle);
