@@ -40,19 +40,17 @@ h1 {
   height: 250px;
   border-radius: 50%;
   border: 3px solid #ccc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .arrow {
   position: absolute;
-  width: 100px;
+  width: 50%; /* Стрелка идет от центра до края */
   height: 8px;
   background-color: red;
-  transform-origin: left center; /* Вращение вокруг левого конца */
-  left: 50%; /* Центрируем точку вращения */
-  margin-left: -125px; /* Смещаем в центр круга */
+  top: 50%;
+  left: 50%;
+  transform-origin: left center; /* Вращение вокруг центра окружности */
+  transform: translate(0, -50%) rotate(45deg);
 }
 
 .mark {
