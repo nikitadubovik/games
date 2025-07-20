@@ -7,14 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const leftArrow = document.getElementById('left-arrow');
   const rightArrow = document.getElementById('right-arrow');
   
-  // Начальные позиции (левая стрелка вправо-вверх под 45 градусов)
+  // Начальные позиции стрелок
   resetArrowsPosition();
   
-  let leftCrosses = 0;
-  let rightCrosses = 0;
-  let animationId = null;
   let leftRotations = 0;
   let rightRotations = 0;
+  let animationId = null;
   
   playBtn.addEventListener('click', startGame);
   submitBtn.addEventListener('click', checkAnswers);
@@ -34,32 +32,37 @@ document.addEventListener('DOMContentLoaded', function() {
     rightInput.value = '';
     
     resetArrowsPosition();
-    
-    // Генерируем случайное количество вращений
     generateRandomRotations();
     
     const startTime = performance.now();
-    const duration = 4000; // Уменьшили длительность для более быстрого вращения
+    const duration = 4000; // Общее время анимации (4 секунды)
+    const accelerationTime = 500; // Время разгона/замедления (0.5 секунды)
     
     function animate(time) {
       const elapsed = time - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Функция плавного ускорения/замедления
-      const easingProgress = easeInOutCubic(progress);
+      // Рассчитываем текущую фазу движения
+      let rotationProgress;
+      if (elapsed < accelerationTime) {
+        // Фаза разгона
+        rotationProgress = easeIn(elapsed / accelerationTime) * progress;
+      } else if (elapsed > duration - accelerationTime) {
+        // Фаза замедления
+        rotationProgress = 1 - easeOut((duration - elapsed) / accelerationTime) * (1 - progress);
+      } else {
+        // Равномерное движение
+        rotationProgress = progress;
+      }
       
       if (progress < 1) {
         // Левая окружность - по часовой стрелке
-        const leftAngle = 45 + easingProgress * 360 * leftRotations;
+        const leftAngle = 45 + rotationProgress * 360 * leftRotations;
         leftArrow.style.transform = `rotate(${leftAngle}deg)`;
         
         // Правая окружность - против часовой стрелки
-        const rightAngle = -45 - easingProgress * 360 * rightRotations;
+        const rightAngle = -45 - rotationProgress * 360 * rightRotations;
         rightArrow.style.transform = `rotate(${rightAngle}deg)`;
-        
-        // Считаем пересечения
-        leftCrosses = Math.floor(leftAngle / 360);
-        rightCrosses = Math.floor(Math.abs(rightAngle) / 360);
         
         animationId = requestAnimationFrame(animate);
       } else {
@@ -75,14 +78,16 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function generateRandomRotations() {
     const totalRotations = getRandomFromArray([10, 11, 12, 13, 14]);
-    leftRotations = 3 + Math.floor(Math.random() * 3); // От 3 до 5
+    leftRotations = 3 + Math.floor(Math.random() * 6); // От 3 до 8 вращений
     rightRotations = totalRotations - leftRotations;
     
-    console.log(`Rotations: Left ${leftRotations}, Right ${rightRotations}, Total ${totalRotations}`);
-  }
-  
-  function easeInOutCubic(t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    // Гарантируем, что правые вращения тоже будут в разумных пределах
+    while (rightRotations < 3 || rightRotations > 8) {
+      leftRotations = 3 + Math.floor(Math.random() * 6);
+      rightRotations = totalRotations - leftRotations;
+    }
+    
+    console.log(`Вращения: Левая ${leftRotations}, Правая ${rightRotations}, Всего ${totalRotations}`);
   }
   
   function checkAnswers() {
@@ -90,10 +95,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const userRight = parseInt(rightInput.value) || 0;
     
     if (userLeft === leftRotations && userRight === rightRotations) {
-      resultMessage.textContent = 'Correct!';
+      resultMessage.textContent = 'Правильно!';
       resultMessage.style.color = '#4CAF50';
     } else {
-      resultMessage.textContent = `Wrong! Correct was: Left ${leftRotations}, Right ${rightRotations}`;
+      resultMessage.textContent = `Неверно! Правильный ответ: Левая ${leftRotations}, Правая ${rightRotations}`;
       resultMessage.style.color = '#f44336';
     }
   }
@@ -107,6 +112,16 @@ document.addEventListener('DOMContentLoaded', function() {
     leftInput.value = '';
     rightInput.value = '';
     resultMessage.textContent = '';
+    resultMessage.style.color = '';
+  }
+  
+  // Функции для плавного разгона/замедления
+  function easeIn(t) {
+    return t * t;
+  }
+  
+  function easeOut(t) {
+    return 1 - (1 - t) * (1 - t);
   }
   
   function getRandomFromArray(array) {
