@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const leftArrow = document.getElementById('left-arrow');
   const rightArrow = document.getElementById('right-arrow');
   
-  // Начальные позиции стрелок (левая - вправо вверх, правая - влево вверх)
+  // Начальные позиции стрелок
   resetArrowsPosition();
   
   let leftRotations = 0;
@@ -18,8 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
   submitBtn.addEventListener('click', checkAnswers);
   
   function resetArrowsPosition() {
-    leftArrow.style.transform = 'translate(50%, 50%) rotate(45deg)';
-    rightArrow.style.transform = 'translate(50%, 50%) rotate(-45deg)';
+    leftArrow.style.transform = 'rotate(45deg)';
+    rightArrow.style.transform = 'rotate(-45deg)';
+    leftArrow.style.transition = 'none';
+    rightArrow.style.transition = 'none';
   }
   
   function startGame() {
@@ -35,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
     generateRandomRotations();
     
     const startTime = performance.now();
-    const duration = 6000; // Увеличили общее время вращения (6 секунд)
-    const accelerationTime = 250; // Уменьшили время разгона/замедления (0.25 сек)
+    const duration = 7000; // Общее время анимации (7 секунд)
+    const accelerationTime = 800; // Время разгона/замедления (0.8 сек)
     
     function animate(time) {
       const elapsed = time - startTime;
@@ -46,10 +48,12 @@ document.addEventListener('DOMContentLoaded', function() {
       let rotationProgress;
       if (elapsed < accelerationTime) {
         // Фаза разгона
-        rotationProgress = easeIn(elapsed / accelerationTime) * progress;
+        const t = elapsed / accelerationTime;
+        rotationProgress = smoothStart(t) * progress;
       } else if (elapsed > duration - accelerationTime) {
         // Фаза замедления
-        rotationProgress = 1 - easeOut((duration - elapsed) / accelerationTime) * (1 - progress);
+        const t = (elapsed - (duration - accelerationTime)) / accelerationTime;
+        rotationProgress = 1 - smoothStop(t) * (1 - progress);
       } else {
         // Равномерное движение
         rotationProgress = progress;
@@ -58,11 +62,11 @@ document.addEventListener('DOMContentLoaded', function() {
       if (progress < 1) {
         // Левая окружность - по часовой стрелке
         const leftAngle = 45 + rotationProgress * 360 * leftRotations;
-        leftArrow.style.transform = `translate(50%, 50%) rotate(${leftAngle}deg)`;
+        leftArrow.style.transform = `rotate(${leftAngle}deg)`;
         
         // Правая окружность - против часовой стрелки
         const rightAngle = -45 - rotationProgress * 360 * rightRotations;
-        rightArrow.style.transform = `translate(50%, 50%) rotate(${rightAngle}deg)`;
+        rightArrow.style.transform = `rotate(${rightAngle}deg)`;
         
         animationId = requestAnimationFrame(animate);
       } else {
@@ -79,28 +83,23 @@ document.addEventListener('DOMContentLoaded', function() {
   function generateRandomRotations() {
     const totalRotations = getRandomFromArray([9, 10, 11, 12]);
     
-    // Случайно выбираем, какая стрелка будет вращаться быстрее
-    const leftIsFaster = Math.random() > 0.5;
+    // Случайное распределение вращений
+    const minRotations = 3;
+    const maxRotations = 7;
     
-    if (leftIsFaster) {
-      leftRotations = 4 + Math.floor(Math.random() * 3); // 4-6 вращений
-      rightRotations = totalRotations - leftRotations;
-      
-      // Гарантируем, что правые вращения будут 3-7
-      while (rightRotations < 3 || rightRotations > 7) {
-        leftRotations = 4 + Math.floor(Math.random() * 3);
-        rightRotations = totalRotations - leftRotations;
-      }
-    } else {
-      rightRotations = 4 + Math.floor(Math.random() * 3); // 4-6 вращений
-      leftRotations = totalRotations - rightRotations;
-      
-      // Гарантируем, что левые вращения будут 3-7
-      while (leftRotations < 3 || leftRotations > 7) {
-        rightRotations = 4 + Math.floor(Math.random() * 3);
-        leftRotations = totalRotations - rightRotations;
+    // Генерируем допустимые комбинации
+    let validCombinations = [];
+    for (let left = minRotations; left <= maxRotations; left++) {
+      const right = totalRotations - left;
+      if (right >= minRotations && right <= maxRotations) {
+        validCombinations.push({left, right});
       }
     }
+    
+    // Выбираем случайную комбинацию
+    const combination = validCombinations[Math.floor(Math.random() * validCombinations.length)];
+    leftRotations = combination.left;
+    rightRotations = combination.right;
     
     console.log(`Вращения: Левая ${leftRotations}, Правая ${rightRotations}, Всего ${totalRotations}`);
   }
@@ -131,12 +130,14 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Функции для плавного разгона/замедления
-  function easeIn(t) {
-    return t * t;
+  function smoothStart(t) {
+    // Плавный старт с постепенным увеличением скорости
+    return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
   }
   
-  function easeOut(t) {
-    return 1 - (1 - t) * (1 - t);
+  function smoothStop(t) {
+    // Плавная остановка с постепенным уменьшением скорости
+    return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
   }
   
   function getRandomFromArray(array) {
