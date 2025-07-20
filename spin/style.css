@@ -34,23 +34,38 @@ h1 {
   width: 600px;
 }
 
-.circle {
+.circle-container {
   position: relative;
   width: 250px;
   height: 250px;
+}
+
+.circle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   border: 3px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .arrow {
   position: absolute;
-  width: 50%; /* Стрелка идет от центра до края */
-  height: 8px;
+  width: 45%;
+  height: 6px;
   background-color: red;
-  top: 50%;
   left: 50%;
-  transform-origin: left center; /* Вращение вокруг центра окружности */
-  transform: translate(0, -50%) rotate(45deg);
+  transform-origin: left center;
+}
+
+#left-arrow {
+  transform: rotate(45deg);
+}
+
+#right-arrow {
+  transform: rotate(-45deg);
 }
 
 .mark {
@@ -59,16 +74,17 @@ h1 {
   height: 20px;
   background-color: yellow;
   transform: rotate(45deg);
+  z-index: 2;
 }
 
 .left-mark {
-  top: 10px;
-  left: 10px;
+  top: 15px;
+  left: 15px;
 }
 
 .right-mark {
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 15px;
 }
 
 .controls {
@@ -113,12 +129,14 @@ button {
 }
 
 @media (max-width: 767px) {
-  .circle {
+  .circles-container {
+    flex-direction: column;
+    width: auto;
+    gap: 30px;
+  }
+
+  .circle-container {
     width: 200px;
     height: 200px;
-  }
-  
-  .arrow {
-    margin-left: -100px; /* Корректировка для мобильных */
   }
 }
