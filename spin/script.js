@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const leftArrow = document.getElementById('left-arrow');
   const rightArrow = document.getElementById('right-arrow');
   
-  // Начальные позиции стрелок
+  // Начальные позиции стрелок (левая - вправо вверх, правая - влево вверх)
   resetArrowsPosition();
   
   let leftRotations = 0;
@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
   submitBtn.addEventListener('click', checkAnswers);
   
   function resetArrowsPosition() {
-    leftArrow.style.transform = 'rotate(45deg)';
-    rightArrow.style.transform = 'rotate(-45deg)';
+    leftArrow.style.transform = 'translate(50%, 50%) rotate(45deg)';
+    rightArrow.style.transform = 'translate(50%, 50%) rotate(-45deg)';
   }
   
   function startGame() {
@@ -35,8 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
     generateRandomRotations();
     
     const startTime = performance.now();
-    const duration = 4000; // Общее время анимации (4 секунды)
-    const accelerationTime = 500; // Время разгона/замедления (0.5 секунды)
+    const duration = 6000; // Увеличили общее время вращения (6 секунд)
+    const accelerationTime = 250; // Уменьшили время разгона/замедления (0.25 сек)
     
     function animate(time) {
       const elapsed = time - startTime;
@@ -58,11 +58,11 @@ document.addEventListener('DOMContentLoaded', function() {
       if (progress < 1) {
         // Левая окружность - по часовой стрелке
         const leftAngle = 45 + rotationProgress * 360 * leftRotations;
-        leftArrow.style.transform = `rotate(${leftAngle}deg)`;
+        leftArrow.style.transform = `translate(50%, 50%) rotate(${leftAngle}deg)`;
         
         // Правая окружность - против часовой стрелки
         const rightAngle = -45 - rotationProgress * 360 * rightRotations;
-        rightArrow.style.transform = `rotate(${rightAngle}deg)`;
+        rightArrow.style.transform = `translate(50%, 50%) rotate(${rightAngle}deg)`;
         
         animationId = requestAnimationFrame(animate);
       } else {
@@ -77,14 +77,29 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function generateRandomRotations() {
-    const totalRotations = getRandomFromArray([10, 11, 12, 13, 14]);
-    leftRotations = 3 + Math.floor(Math.random() * 6); // От 3 до 8 вращений
-    rightRotations = totalRotations - leftRotations;
+    const totalRotations = getRandomFromArray([9, 10, 11, 12]);
     
-    // Гарантируем, что правые вращения тоже будут в разумных пределах
-    while (rightRotations < 3 || rightRotations > 8) {
-      leftRotations = 3 + Math.floor(Math.random() * 6);
+    // Случайно выбираем, какая стрелка будет вращаться быстрее
+    const leftIsFaster = Math.random() > 0.5;
+    
+    if (leftIsFaster) {
+      leftRotations = 4 + Math.floor(Math.random() * 3); // 4-6 вращений
       rightRotations = totalRotations - leftRotations;
+      
+      // Гарантируем, что правые вращения будут 3-7
+      while (rightRotations < 3 || rightRotations > 7) {
+        leftRotations = 4 + Math.floor(Math.random() * 3);
+        rightRotations = totalRotations - leftRotations;
+      }
+    } else {
+      rightRotations = 4 + Math.floor(Math.random() * 3); // 4-6 вращений
+      leftRotations = totalRotations - rightRotations;
+      
+      // Гарантируем, что левые вращения будут 3-7
+      while (leftRotations < 3 || leftRotations > 7) {
+        rightRotations = 4 + Math.floor(Math.random() * 3);
+        leftRotations = totalRotations - rightRotations;
+      }
     }
     
     console.log(`Вращения: Левая ${leftRotations}, Правая ${rightRotations}, Всего ${totalRotations}`);
